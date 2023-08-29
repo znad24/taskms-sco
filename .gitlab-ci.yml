@@ -26,7 +26,7 @@ deploy-job:
   stage: deploy
   script:
     - docker service rm $CONTAINER_NAME || true
-    - docker service create --mount --with-registry-auth --name $CONTAINER_NAME --publish published=8084,target=80 $HOKBEN_REGISTRY/$APP_IMAGE:$CI_COMMIT_SHA
+    - docker service create --with-registry-auth --name $CONTAINER_NAME --publish published=8084,target=80 $HOKBEN_REGISTRY/$APP_IMAGE:$CI_COMMIT_SHA
     #- docker service create --mount type=bind,source=/var/data/data_aset/uploads,destination=/var/www/html/admin/uploads --with-registry-auth --name $CONTAINER_NAME --publish published=8084,target=80 $HOKBEN_REGISTRY/$APP_IMAGE:$CI_COMMIT_SHA
 
 #deploy-production:
