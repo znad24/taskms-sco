@@ -58,22 +58,22 @@ include("include/sidebar.php");
                         <div class="col-md-7">
                           <form class="form-horizontal" role="form" action="" method="post" autocomplete="off">
                             <div class="form-group">
-                              <label class="control-label col-sm-2">Fullname</label>
-                              <div class="col-sm-8">
-                                <input type="text" value="<?php echo $row['fullname']; ?>" placeholder="Enter Employee Name" name="em_fullname" list="expense" class="form-control input-custom" id="default" required>
+                              <label class="control-label text-p-reset">Fullname</label>
+                              <div class="">
+                                <input type="text" value="<?php echo $row['fullname']; ?>" placeholder="Enter Employee Name" name="em_fullname" list="expense" class="form-control rounded-0" id="default" required>
                               </div>
                             </div>
                             
                             <div class="form-group">
-                              <label class="control-label col-sm-2">Username</label>
-                              <div class="col-sm-8">
-                                <input type="text" value="<?php echo $row['username']; ?>" placeholder="Enter Employee Username" name="em_username" class="form-control input-custom" required>
+                              <label class="control-label text-p-reset">Username</label>
+                              <div class="">
+                                <input type="text" value="<?php echo $row['username']; ?>" placeholder="Enter Employee Username" name="em_username" class="form-control rounded-0" required>
                               </div>
                             </div>
                             <div class="form-group">
-                              <label class="control-label col-sm-2">Email</label>
-                              <div class="col-sm-8">
-                                <input type="email" value="<?php echo $row['email']; ?>" placeholder="Enter employee email" name="em_email" class="form-control input-custom" required>
+                              <label class="control-label text-p-reset">Email</label>
+                              <div class="">
+                                <input type="email" value="<?php echo $row['email']; ?>" placeholder="Enter employee email" name="em_email" class="form-control rounded-0" required>
                               </div>
                             </div>
                       
@@ -81,20 +81,20 @@ include("include/sidebar.php");
                             </div>
                             <div class="form-group">
                               <div class="col-sm-offset-4 col-sm-3">
-                                <button type="submit" name="update_current_employee" class="btn btn-success-custom">Update Now</button>
+                                <button type="submit" name="update_current_employee" class="btn btn-primary-custom">Update Now</button>
                               </div>
                             </div>
                           </form> 
                         </div>
                         <div class="col-md-5">
-                          <button id="emlpoyee_pass_btn" class="btn btn-primary">Change Password</button>
+                          <a id="emlpoyee_pass_btn" href="javascript:void(0)" class="">Change Password</a>
                           <form action="" method="POST" id="employee_pass_cng">
                             <div class="form-group">
                               <label for="admin_password">New Password:</label>
-                              <input type="password" name="employee_password" class="form-control input-custom" id="employee_password" min="8" required>
+                              <input type="password" name="employee_password" class="form-control rounded-0" id="employee_password" min="8" required>
                             </div>
                             <div class="form-group">
-                              <button type="submit" name="btn_user_password" class="btn btn-success">Ok</button>
+                              <button type="submit" name="btn_user_password" class="btn btn-primary rounded-0 btn-sm">Ok</button>
 
                             </div>
                           </form>
@@ -119,7 +119,7 @@ include("include/footer.php");
 <script type="text/javascript">
 
 $('#emlpoyee_pass_btn').click(function(){
-    $('#employee_pass_cng').toggle('slow');
+    $('#employee_pass_cng').toggle('fast');
 });
 
 </script>

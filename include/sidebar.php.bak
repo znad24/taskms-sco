@@ -40,7 +40,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="task-info.php"><span style="color: #5bcad9; font-weight: bold;">HOME</span></a>
+      <a class="navbar-brand" href="task-info.php"><span style="color: #5bcad9; font-weight: bold;">MENU</span></a>
     </div>
 
     <?php

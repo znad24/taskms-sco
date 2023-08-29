@@ -65,20 +65,20 @@ if(isset($_POST['add_new_employee'])){
                 <div class="form-horizontal">
 
                   <div class="form-group">
-                    <label class="control-label col-sm-4">Fullname</label>
-                    <div class="col-sm-6">
+                    <label class="control-label text-p-reset">Fullname</label>
+                    <div class="">
                       <input type="text" placeholder="Enter Employee Name" name="em_fullname" list="expense" class="form-control input-custom" id="default" required>
                     </div>
                   </div>
                    <div class="form-group">
-                    <label class="control-label col-sm-4">Username</label>
-                    <div class="col-sm-6">
+                    <label class="control-label text-p-reset">Username</label>
+                    <div class="">
                       <input type="text" placeholder="Enter Employee username" name="em_username" class="form-control input-custom" required>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-4">Email</label>
-                    <div class="col-sm-6">
+                    <label class="control-label text-p-reset">Email</label>
+                    <div class="">
                       <input type="email" placeholder="Enter Employee Email" name="em_email" class="form-control input-custom" required>
                     </div>
                   </div>
@@ -89,10 +89,10 @@ if(isset($_POST['add_new_employee'])){
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-3">
-                      <button type="submit" name="add_new_employee" class="btn btn-success-custom">Add Employee</button>
+                      <button type="submit" name="add_new_employee" class="btn btn-primary btn-sm rounded-0">Add Employee</button>
                     </div>
                     <div class="col-sm-3">
-                      <button type="submit" class="btn btn-danger-custom" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-default btn-sm rounded-0" data-dismiss="modal">Cancel</button>
                     </div>
                   </div>
                 </div>
@@ -123,7 +123,7 @@ if(isset($_POST['add_new_employee'])){
           <?php } ?>
             <?php if($user_role == 1){ ?>
                 <div class="btn-group">
-                  <button class="btn btn-success btn-menu" data-toggle="modal" data-target="#myModal">Add New Employee</button>
+                  <button class="btn btn-primary-custom btn-menu" data-toggle="modal" data-target="#myModal">Add New Employee</button>
                 </div>
               <?php } ?>
           <ul class="nav nav-tabs nav-justified nav-tabs-custom">

@@ -37,48 +37,48 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 
     <div class="row">
       <div class="col-md-12">
-        <div class="well well-custom">
+        <div class="well well-custom rounded-0">
           <div class="row">
             <div class="col-md-8 col-md-offset-2">
-              <div class="well">
+              <div class="well rounded-0">
                 <h3 class="text-center bg-primary" style="padding: 7px;">Edit Task </h3><br>
 
                       <div class="row">
                         <div class="col-md-12">
                           <form class="form-horizontal" role="form" action="" method="post" autocomplete="off">
                             <div class="form-group">
-			                    <label class="control-label col-sm-5">Task Title</label>
-			                    <div class="col-sm-7">
-			                      <input type="text" placeholder="Task Title" id="task_title" name="task_title" list="expense" class="form-control" value="<?php echo $row['t_title']; ?>" <?php if($user_role != 1){ ?> readonly <?php } ?> val required>
+			                    <label class="control-label text-p-reset">Task Title</label>
+			                    <div class="">
+			                      <input type="text" placeholder="Task Title" id="task_title" name="task_title" list="expense" class="form-control rounded-0" value="<?php echo $row['t_title']; ?>" <?php if($user_role != 1){ ?> readonly <?php } ?> val required>
 			                    </div>
 			                  </div>
 			                  <div class="form-group">
-			                    <label class="control-label col-sm-5">Task Description</label>
-			                    <div class="col-sm-7">
-			                      <textarea name="task_description" id="task_description" placeholder="Text Deskcription" class="form-control" rows="5" cols="5"><?php echo $row['t_description']; ?></textarea>
+			                    <label class="control-label text-p-reset">Task Description</label>
+			                    <div class="">
+			                      <textarea name="task_description" id="task_description" placeholder="Text Deskcription" class="form-control rounded-0" rows="5" cols="5"><?php echo $row['t_description']; ?></textarea>
 			                    </div>
 			                  </div>
 			                  <div class="form-group">
-			                    <label class="control-label col-sm-5">Strat Time</label>
-			                    <div class="col-sm-7">
-			                      <input type="text" name="t_start_time" id="t_start_time"  class="form-control" value="<?php echo $row['t_start_time']; ?>">
+			                    <label class="control-label text-p-reset">Strat Time</label>
+			                    <div class="">
+			                      <input type="text" name="t_start_time" id="t_start_time"  class="form-control rounded-0" value="<?php echo $row['t_start_time']; ?>">
 			                    </div>
 			                  </div>
 			                  <div class="form-group">
-			                    <label class="control-label col-sm-5">End Time</label>
-			                    <div class="col-sm-7">
-			                      <input type="text" name="t_end_time" id="t_end_time" class="form-control" value="<?php echo $row['t_end_time']; ?>">
+			                    <label class="control-label text-p-reset">End Time</label>
+			                    <div class="">
+			                      <input type="text" name="t_end_time" id="t_end_time" class="form-control rounded-0" value="<?php echo $row['t_end_time']; ?>">
 			                    </div>
 			                  </div>
 
 			                  <div class="form-group">
-			                    <label class="control-label col-sm-5">Assign To</label>
-			                    <div class="col-sm-7">
+			                    <label class="control-label text-p-reset">Assign To</label>
+			                    <div class="">
 			                      <?php 
 			                        $sql = "SELECT user_id, fullname FROM tbl_admin WHERE user_role = 2";
 			                        $info = $obj_admin->manage_all_info($sql);   
 			                      ?>
-			                      <select class="form-control" name="assign_to" id="aassign_to" <?php if($user_role != 1){ ?> disabled="true" <?php } ?>>
+			                      <select class="form-control rounded-0" name="assign_to" id="aassign_to" <?php if($user_role != 1){ ?> disabled="true" <?php } ?>>
 			                        <option value="">Select</option>
 
 			                        <?php while($rows = $info->fetch(PDO::FETCH_ASSOC)){ ?>
@@ -92,9 +92,9 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                  </div>
 
 			                   <div class="form-group">
-			                    <label class="control-label col-sm-5">Status</label>
-			                    <div class="col-sm-7">
-			                      <select class="form-control" name="status" id="status">
+			                    <label class="control-label text-p-reset">Status</label>
+			                    <div class="">
+			                      <select class="form-control rounded-0" name="status" id="status">
 			                      	<option value="0" <?php if($row['status'] == 0){ ?>selected <?php } ?>>Incomplete</option>
 			                      	<option value="1" <?php if($row['status'] == 1){ ?>selected <?php } ?>>In Progress</option>
 			                      	<option value="2" <?php if($row['status'] == 2){ ?>selected <?php } ?>>Completed</option>
@@ -110,7 +110,7 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
                               </div>
 
                               <div class="col-sm-3">
-                                <button type="submit" name="update_task_info" class="btn btn-success-custom">Update Now</button>
+                                <button type="submit" name="update_task_info" class="btn btn-primary-custom">Update Now</button>
                               </div>
                             </div>
                           </form> 

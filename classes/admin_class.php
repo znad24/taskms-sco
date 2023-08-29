@@ -10,7 +10,7 @@ class Admin_Class
         $host_name='localhost';
 		$user_name='root';
 		$password='';
-		$db_name='etmsh';
+		$db_name='etms_db';
 
 		try{
 			$connection=new PDO("mysql:host={$host_name}; dbname={$db_name}", $user_name,  $password);
@@ -384,10 +384,10 @@ class Admin_Class
 	/* =================Attendance Related===================== */
 	public function add_punch_in($data){
 		// data insert 
-		$date = new DateTime('now', new DateTimeZone('Asia/Dhaka'));
+		$date = new DateTime('now', new DateTimeZone('Asia/Manila'));
  		
 		$user_id  = $this->test_form_input_data($data['user_id']);
-		$punch_in_time = $date->format('d-m-Y H:i:s');
+		$punch_in_time = $date->format('Y-m-d H:i:s');
 
 		try{
 			$add_attendance = $this->db->prepare("INSERT INTO attendance_info (atn_user_id, in_time) VALUES ('$user_id', '$punch_in_time') ");
@@ -402,8 +402,8 @@ class Admin_Class
 
 
 	public function add_punch_out($data){
-		$date = new DateTime('now', new DateTimeZone('Asia/Dhaka'));
-		$punch_out_time = $date->format('d-m-Y H:i:s');
+		$date = new DateTime('now', new DateTimeZone('Asia/Manila'));
+		$punch_out_time = $date->format('Y-m-d H:i:s');
 		$punch_in_time  = $this->test_form_input_data($data['punch_in_time']);
 
 		$dteStart = new DateTime($punch_in_time);

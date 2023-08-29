@@ -40,48 +40,48 @@ include("include/sidebar.php");
     <div class="modal-dialog add-category-modal">
     
       <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
+      <div class="modal-content rounded-0">
+        <div class="modal-header rounded-0">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h2 class="modal-title text-center">Assign New Task</h2>
+          <h2 class="modal-title text-center">Add New Task</h2>
         </div>
-        <div class="modal-body">
+        <div class="modal-body rounded-0">
           <div class="row">
             <div class="col-md-12">
               <form role="form" action="" method="post" autocomplete="off">
                 <div class="form-horizontal">
                   <div class="form-group">
-                    <label class="control-label col-sm-5">Task Title</label>
-                    <div class="col-sm-7">
-                      <input type="text" placeholder="Task Title" id="task_title" name="task_title" list="expense" class="form-control" id="default" required>
+                    <label class="control-label text-p-reset">Task Title</label>
+                    <div class="">
+                      <input type="text" placeholder="Task Title" id="task_title" name="task_title" list="expense" class="form-control rounded-0" id="default" required>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-5">Task Description</label>
-                    <div class="col-sm-7">
-                      <textarea name="task_description" id="task_description" placeholder="Text Deskcription" class="form-control" rows="5" cols="5"></textarea>
+                    <label class="control-label text-p-reset">Task Description</label>
+                    <div class="">
+                      <textarea name="task_description" id="task_description" placeholder="Text Deskcription" class="form-control rounded-0" rows="5" cols="5"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-5">Start Time</label>
-                    <div class="col-sm-7">
-                      <input type="text" name="t_start_time" id="t_start_time" class="form-control">
+                    <label class="control-label text-p-reset">Start Time</label>
+                    <div class="">
+                      <input type="text" name="t_start_time" id="t_start_time" class="form-control rounded-0">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-5">End Time</label>
-                    <div class="col-sm-7">
-                      <input type="text" name="t_end_time" id="t_end_time" class="form-control">
+                    <label class="control-label text-p-reset">End Time</label>
+                    <div class="">
+                      <input type="text" name="t_end_time" id="t_end_time" class="form-control rounded-0">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label col-sm-5">Technical Support</label>
-                    <div class="col-sm-7">
+                    <label class="control-label text-p-reset">Technical Support</label>
+                    <div class="">
                       <?php 
                         $sql = "SELECT user_id, fullname FROM tbl_admin WHERE user_role = 2";
                         $info = $obj_admin->manage_all_info($sql);   
                       ?>
-                      <select class="form-control" name="assign_to" id="aassign_to" required>
+                      <select class="form-control rounded-0" name="assign_to" id="aassign_to" required>
                         <option value="">Select Employee...</option>
 
                         <?php while($row = $info->fetch(PDO::FETCH_ASSOC)){ ?>
@@ -95,10 +95,10 @@ include("include/sidebar.php");
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-3">
-                      <button type="submit" name="add_task_post" class="btn btn-success-custom">Assign Task</button>
+                      <button type="submit" name="add_task_post" class="btn btn-primary rounded-0 btn-sm">Add Task</button>
                     </div>
                     <div class="col-sm-3">
-                      <button type="submit" class="btn btn-danger-custom" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-default rounded-0 btn-sm" data-dismiss="modal">Cancel</button>
                     </div>
                   </div>
                 </div>
@@ -117,23 +117,23 @@ include("include/sidebar.php");
 
     <div class="row">
       <div class="col-md-12">
-        <div class="well well-custom">
+        <div class="well well-custom rounded-0">
           <div class="gap"></div>
           <div class="row">
             <div class="col-md-8">
               <div class="btn-group">
                 <?php if($user_role == 1){ ?>
                 <div class="btn-group">
-                  <!--<button class="btn btn-warning btn-menu" data-toggle="modal" data-target="#myModal">Assign New Task</button>-->
+                  <!--<button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Assign New Task</button>-->
                 </div>
               <?php } ?>
 
               </div>
-				<div class="btn-group">
-                  <button class="btn btn-warning btn-menu" data-toggle="modal" data-target="#myModal">Assign New Task</button>
+<div class="btn-group">
+                  <button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Add New Task</button>
                 </div>
             </div>
-
+				
             
           </div>
           <center ><h3>Task Management Section</h3></center>
@@ -186,11 +186,13 @@ include("include/sidebar.php");
                   <td><?php echo $row['t_end_time']; ?></td>
                   <td>
                     <?php  if($row['status'] == 1){
-                        echo "In Progress <span style='color:#d4ab3a;' class=' glyphicon glyphicon-refresh' >";
+                        // echo "In Progress <span style='color:#5bcad9;' class=' glyphicon glyphicon-refresh' >";
+                        echo '<small class="label label-warning px-3">In Progress <span class="glyphicon glyphicon-refresh" ></small>';
                     }elseif($row['status'] == 2){
-                       echo "Completed <span style='color:#00af16;' class=' glyphicon glyphicon-ok' >";
+                        echo '<small class="label label-success px-3">In Completed <span class="glyphicon glyphicon-ok" ></small>';
+                        // echo "Completed <span style='color:#00af16;' class=' glyphicon glyphicon-ok' >";
                     }else{
-                      echo "Incomplete <span style='color:#d00909;' class=' glyphicon glyphicon-remove' >";
+                        echo '<small class="label label-default border px-3">In Completed <span class="glyphicon glyphicon-remove" ></small>';
                     } ?>
                     
                   </td>

@@ -126,7 +126,7 @@ include("include/sidebar.php");
                   <td><?php echo $row['out_time']; ?></td>
                   <td><?php
                     if($row['total_duration'] == null){
-                      $date = new DateTime('now', new DateTimeZone('Asia/Dhaka'));
+                      $date = new DateTime('now', new DateTimeZone('Asia/Manila'));
                       $current_time = $date->format('d-m-Y H:i:s');
 
                       $dteStart = new DateTime($row['in_time']);
@@ -147,12 +147,19 @@ include("include/sidebar.php");
                       <button type="submit" name="add_punch_out" class="btn btn-danger btn-xs rounded" >Clock Out</button>
                     </form>
                   </td>
+                <?php }else{ ?>
+                <td class="text-center">
+                  ------
+                </td>
                 <?php } ?>
                 <?php if($user_role == 1){ ?>
                  <td>
                   <a title="Delete" href="?delete_attendance=delete_attendance&aten_id=<?php echo $row['aten_id']; ?>" onclick=" return check_delete();"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
-              <?php } ?>
+                <?php }else{ ?>
+                <td>
+                </td>
+                <?php } ?>
                 </tr>
                 <?php } ?>
                 
