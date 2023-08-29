@@ -8,8 +8,8 @@ class Admin_Class
 	public function __construct()
 	{ 
         $host_name='172.18.100.77';
-		$user_name='dani';
-		$password='Hokahoka_1';
+		$user_name='root';
+		$password='';
 		$db_name='etms_db';
 
 		try{
