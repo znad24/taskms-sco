@@ -1,0 +1,43 @@
+variables:
+  HOKBEN_REGISTRY: "dockersvr.hokben.net:55555"
+  APP_IMAGE: "task-mng"
+  CONTAINER_NAME: "task-mng"
+
+stages:
+  - build
+  - push
+  - deploy
+  - deploy-prod
+
+build-job:
+  stage: build
+  script:
+    - docker build -t $HOKBEN_REGISTRY/$APP_IMAGE:$CI_COMMIT_SHA .
+
+push-job:
+  stage: push
+  script:
+    - docker login -u $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=user-registry:).*') -p $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=pass-registry:).*') $HOKBEN_REGISTRY
+    - docker push $HOKBEN_REGISTRY/$APP_IMAGE:$CI_COMMIT_SHA
+    - ssh ithokben@worker1 "docker login -u $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=user-registry:).*') -p $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=pass-registry:).*') $HOKBEN_REGISTRY"
+    - ssh ithokben@worker2 "docker login -u $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=user-registry:).*') -p $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=pass-registry:).*') $HOKBEN_REGISTRY"
+
+deploy-job:
+  stage: deploy
+  script:
+    - docker service rm $CONTAINER_NAME || true
+    - docker service create --with-registry-auth --name $CONTAINER_NAME --publish published=8084,target=80 $HOKBEN_REGISTRY/$APP_IMAGE:$CI_COMMIT_SHA
+    #- docker service create --mount type=bind,source=/var/data/data_aset/uploads,destination=/var/www/html/admin/uploads --with-registry-auth --name $CONTAINER_NAME --publish published=8084,target=80 $HOKBEN_REGISTRY/$APP_IMAGE:$CI_COMMIT_SHA
+
+#deploy-production:
+#  stage: deploy-prod
+#  script:
+    #- gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt application/config/config-prod.php.asc > application/config/config.php
+    #- docker build -t $HOKBEN_REGISTRY/$APP_IMAGE:prod-$CI_COMMIT_SHA .
+    #- docker push $HOKBEN_REGISTRY/$APP_IMAGE:prod-$CI_COMMIT_SHA
+    #- ssh ubuntu@prod-manager "docker login -u $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=user-registry:).*') -p $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=pass-registry:).*') $HOKBEN_REGISTRY"
+    #- ssh ubuntu@prod-worker1 "docker login -u $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=user-registry:).*') -p $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=pass-registry:).*') $HOKBEN_REGISTRY"
+    #- ssh ubuntu@prod-worker2 "docker login -u $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=user-registry:).*') -p $(gpg -q --pinentry-mode loopback --passphrase-file ~/gpg_pass --decrypt auth.yml.asc | grep -oP '(?<=pass-registry:).*') $HOKBEN_REGISTRY"
+    #- ssh ubuntu@prod-manager "docker service update --image $HOKBEN_REGISTRY/$APP_IMAGE:prod-$CI_COMMIT_SHA $APP_IMAGE"
+
+  #when: manual
