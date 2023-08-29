@@ -69,7 +69,7 @@ include("include/sidebar.php");
                 <tr>
                   <th>#</th>
                   <th>Task Title</th>
-                  <th>Technical Support</th>
+                  <th>Assigned To</th>
                   <th>Start Time</th>
                   <th>End Time</th>
                   <th>Status</th>
