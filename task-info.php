@@ -60,15 +60,15 @@ include("include/sidebar.php");
 					<label for="task_category">Task Category</label>
 				<select class="form-control" name="task_category" id="task_category">
 				  <option disabled selected value="">Silahkan Pilih</option>s
-				  <option value="network">NETWORK</option>
-				  <option value="hardware">HARDWARE</option>
-				  <option value="software">SOFTWARE</option>
-				  <option value="printer">PRINTER</option>		
-          <option value="data">INPUT DATA</option>
-          <option value="os">OS</option>
-          <option value="maintenance">MAINTENANCE</option>\
-          <option value="meeting">MEETING</option>
-          <option value="serahterima">SERAH TERIMA</option>	  
+				  <option value="NETWORK">NETWORK</option>
+				  <option value="HARDWARE">HARDWARE</option>
+				  <option value="SOFTWARE">SOFTWARE</option>
+				  <option value="PRINTER">PRINTER</option>		
+          <option value="INPUT DATA">INPUT DATA</option>
+          <option value="OS">OS</option>
+          <option value="MAINTENANCE">MAINTENANCE</option>\
+          <option value="MEETING">MEETING</option>
+          <option value="SERAH TERIMA">SERAH TERIMA</option>	  
 				</select>
 				</div>
                   <div class="form-group">
