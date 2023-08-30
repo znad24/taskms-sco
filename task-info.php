@@ -63,7 +63,10 @@ include("include/sidebar.php");
 				  <option value="network">NETWORK</option>
 				  <option value="hardware">HARDWARE</option>
 				  <option value="software">SOFTWARE</option>
-				  <option value="printer">PRINTER</option>			  
+				  <option value="printer">PRINTER</option>		
+          <option value="data">INPUT DATA</option>
+          <option value="os">OS</option>
+          <option value="maintenance">MAINTENANCE</option>	  
 				</select>
 				</div>
                   <div class="form-group">
