@@ -57,6 +57,16 @@ include("include/sidebar.php");
                     </div>
                   </div>
                   <div class="form-group">
+					<label for="task_category">Task Category</label>
+				        <select class="form-control" name="task_category" id="task_category">
+                      <option disabled selected value="">Silahkan Pilih</option>s
+                      <option value="network">NETWORK</option>
+                      <option value="hardware">HARDWARE</option>
+                      <option value="software">SOFTWARE</option>
+                      <option value="printer">PRINTER</option>			  
+				        </select>
+				      </div>
+                  <div class="form-group">
                     <label class="control-label text-p-reset">Task Description</label>
                     <div class="">
                       <textarea name="task_description" id="task_description" placeholder="Text Deskcription" class="form-control rounded-0" rows="5" cols="5"></textarea>

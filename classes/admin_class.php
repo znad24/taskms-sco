@@ -316,16 +316,18 @@ class Admin_Class
 	public function add_new_task($data){
 		// data insert   
 		$task_title  = $this->test_form_input_data($data['task_title']);
+		$task_category = $this->test_form_input_data($data['task_category']);
 		$task_description = $this->test_form_input_data($data['task_description']);
 		$t_start_time = $this->test_form_input_data($data['t_start_time']);
 		$t_end_time = $this->test_form_input_data($data['t_end_time']);
 		$assign_to = $this->test_form_input_data($data['assign_to']);
 
 		try{
-			$add_task = $this->db->prepare("INSERT INTO task_info (t_title, t_description, t_start_time, 	t_end_time, t_user_id) VALUES (:x, :y, :z, :a, :b) ");
+			$add_task = $this->db->prepare("INSERT INTO task_info (t_title,  t_category,  t_description,  t_start_time, 	t_end_time, t_user_id) VALUES (:x, :d,  :y,  :z, :a, :b) ");
 
 			$add_task->bindparam(':x', $task_title);
-			$add_task->bindparam(':y', $task_description);
+			$add_task->bindparam(':d', $task_category);
+			$add_task->bindparam(':y', $task_description);			
 			$add_task->bindparam(':z', $t_start_time);
 			$add_task->bindparam(':a', $t_end_time);
 			$add_task->bindparam(':b', $assign_to);
@@ -343,6 +345,7 @@ class Admin_Class
 
 		public function update_task_info($data, $task_id, $user_role){
 			$task_title  = $this->test_form_input_data($data['task_title']);
+			$task_category = $this->test_form_input_data($data['task_category']);
 			$task_description = $this->test_form_input_data($data['task_description']);
 			$t_start_time = $this->test_form_input_data($data['t_start_time']);
 			$t_end_time = $this->test_form_input_data($data['t_end_time']);
@@ -359,9 +362,10 @@ class Admin_Class
 			}
 
 			try{
-				$update_task = $this->db->prepare("UPDATE task_info SET t_title = :x, t_description = :y, t_start_time = :z, t_end_time = :a, t_user_id = :b, status = :c WHERE task_id = :id ");
+				$update_task = $this->db->prepare("UPDATE task_info SET t_title = :x, t_category = :d, t_description = :y, t_start_time = :z, t_end_time = :a, t_user_id = :b, status = :c WHERE task_id = :id ");
 
 				$update_task->bindparam(':x', $task_title);
+				$update_task->bindparam(':d', $task_category);
 				$update_task->bindparam(':y', $task_description);
 				$update_task->bindparam(':z', $t_start_time);
 				$update_task->bindparam(':a', $t_end_time);
