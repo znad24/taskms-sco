@@ -36,7 +36,7 @@ include("include/login_header.php");
 </style>
 <div class="col-lg-4 col-md-6 col-sm-12">
 	<div class="well rounded-0" style="background:#fff !important">
-	<center><h2 style="margin-top:1px;">Employee Task Management System</h2></center>
+	<center><h2 style="margin-top:1px;">HOKBEN</h2> <h3>Task Management System</h3></center>
 		<form class="form-horizontal form-custom-login" action="" method="POST">
 			<div class="form-heading">
 			<h2 class="text-center">Login Panel</h2>
