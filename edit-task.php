@@ -57,6 +57,7 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                    <div class="">
 			                      <input type="text" placeholder="Task Category" id="task_category" name="task_category" list="expense" class="form-control rounded-0" value="<?php echo $row['t_category']; ?>" <?php if($user_role != 1){ ?> readonly <?php } ?> val required>
 			                    </div>
+								</div>
 			                  <div class="form-group">
 			                    <label class="control-label text-p-reset">Task Description</label>
 			                    <div class="">
