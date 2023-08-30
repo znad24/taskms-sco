@@ -192,7 +192,7 @@ include("include/sidebar.php");
                         echo '<small class="label label-success px-3">In Completed <span class="glyphicon glyphicon-ok" ></small>';
                         // echo "Completed <span style='color:#00af16;' class=' glyphicon glyphicon-ok' >";
                     }else{
-                        echo '<small class="label label-default border px-3">In Completed <span class="glyphicon glyphicon-remove" ></small>';
+                        echo '<small class="label label-default border px-3">Completed <span class="glyphicon glyphicon-remove" ></small>';
                     } ?>
                     
                   </td>

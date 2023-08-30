@@ -185,14 +185,13 @@ include("include/sidebar.php");
                   <td><?php echo $row['t_start_time']; ?></td>
                   <td><?php echo $row['t_end_time']; ?></td>
                   <td>
-                    <?php  if($row['status'] == 1){
-                        // echo "In Progress <span style='color:#5bcad9;' class=' glyphicon glyphicon-refresh' >";
-                        echo '<small class="label label-warning px-3">In Progress <span class="glyphicon glyphicon-refresh" ></small>';
-                    }elseif($row['status'] == 2){
-                        echo '<small class="label label-success px-3">In Completed <span class="glyphicon glyphicon-ok" ></small>';
-                        // echo "Completed <span style='color:#00af16;' class=' glyphicon glyphicon-ok' >";
-                    }else{
-                        echo '<small class="label label-default border px-3">Completed <span class="glyphicon glyphicon-remove" ></small>';
+                    <?php  if($row['status'] == 0){
+							echo '<small class="label label-default border px-3">In Completed <span class="glyphicon glyphicon-remove" ></small>';
+					}elseif ($row['status'] == 1){
+							echo '<small class="label label-warning px-3">In Progress <span class="glyphicon glyphicon-refresh" ></small>';		
+					 }elseif($row['status'] == 2){
+                        echo '<small class="label label-success px-3">Completed	 <span class="glyphicon glyphicon-ok" ></small>';
+                    
                     } ?>
                     
                   </td>
