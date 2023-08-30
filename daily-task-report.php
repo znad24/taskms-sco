@@ -53,7 +53,8 @@ include("include/sidebar.php");
             </div>
             <div class="col-md-4">
                   <button class="btn btn-primary btn-sm btn-menu" type="button" id="filter"><i class="glyphicon glyphicon-filter"></i> Filter</button>
-                  <button class="btn btn-success btn-sm btn-menu" type="button" id="print"><i class="glyphicon glyphicon-print"></i> Print</button>
+                  <button class="btn btn-success btn-sm btn-menu" type="button" id="print"><i class="glyphicon glyphicon-print"></i> Print PDF</button>
+				  <a href="export.php"><button class="btn btn-info" type="button" id="export">Export to Excel</button></a>
             </div>
 
             
