@@ -133,7 +133,12 @@ include("include/sidebar.php");
                   <button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Add New Task</button>
                 </div>
             </div>
-				
+            <nav class="navbar navbar-light bg-light">
+				<form class="form-inline">
+					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
+			</nav>
             
           </div>
           <center ><h3>Task Management Section</h3></center>
