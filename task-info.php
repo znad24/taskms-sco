@@ -66,7 +66,8 @@ include("include/sidebar.php");
 				  <option value="printer">PRINTER</option>		
           <option value="data">INPUT DATA</option>
           <option value="os">OS</option>
-          <option value="maintenance">MAINTENANCE</option>	  
+          <option value="maintenance">MAINTENANCE</option>\
+          <option value="meeting">MEETING</option>	  
 				</select>
 				</div>
                   <div class="form-group">
