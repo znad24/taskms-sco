@@ -56,16 +56,16 @@ include("include/sidebar.php");
                       <input type="text" placeholder="Task Title" id="task_title" name="task_title" list="expense" class="form-control rounded-0" id="default" required>
                     </div>
                   </div>
-                  <div class="form-group">
+				<div class="form-group">
 					<label for="task_category">Task Category</label>
-				        <select class="form-control" name="task_category" id="task_category">
-                      <option disabled selected value="">Silahkan Pilih</option>s
-                      <option value="network">NETWORK</option>
-                      <option value="hardware">HARDWARE</option>
-                      <option value="software">SOFTWARE</option>
-                      <option value="printer">PRINTER</option>			  
-				        </select>
-				      </div>
+				<select class="form-control" name="task_category" id="task_category">
+				  <option disabled selected value="">Silahkan Pilih</option>s
+				  <option value="network">NETWORK</option>
+				  <option value="hardware">HARDWARE</option>
+				  <option value="software">SOFTWARE</option>
+				  <option value="printer">PRINTER</option>			  
+				</select>
+				</div>
                   <div class="form-group">
                     <label class="control-label text-p-reset">Task Description</label>
                     <div class="">
@@ -155,6 +155,7 @@ include("include/sidebar.php");
                 <tr>
                   <th>#</th>
                   <th>Task Title</th>
+				          <th>Task Category</th>
                   <th>Technical Support</th>
                   <th>Start Time</th>
                   <th>End Time</th>
@@ -189,6 +190,7 @@ include("include/sidebar.php");
                 <tr>
                   <td><?php echo $serial; $serial++; ?></td>
                   <td><?php echo $row['t_title']; ?></td>
+				  <td><?php echo $row['t_category']; ?></td>
                   <td><?php echo $row['fullname']; ?></td>
                   <td><?php echo $row['t_start_time']; ?></td>
                   <td><?php echo $row['t_end_time']; ?></td>
