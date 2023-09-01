@@ -52,10 +52,11 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                      <input type="text" placeholder="Task Title" id="task_title" name="task_title" list="expense" class="form-control rounded-0" value="<?php echo $row['t_title']; ?>" <?php if($user_role != 1){ ?> readonly <?php } ?> val required>
 			                    </div>
 			                  </div>
-							  <!--<div class="form-group">
-			                    <label class="control-label text-p-reset">Task Category</label>
+							  
+							  <div class="form-group">
+			                    <!--<label class="control-label text-p-reset">Task Category</label>
 								<div class="form-group">-->
-								<label for="task_category">Task Category</label>
+								<label class="control-label text-p-reset">Task Category</label>
 								<select class="form-control" name="task_category" id="task_category">
 								  <option disabled selected value="">Silahkan Pilih</option>s
 								  <option value="NETWORK">NETWORK</option>
@@ -73,6 +74,7 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                      <input type="text" placeholder="Task Category" id="task_category" name="task_category" list="expense" class="form-control rounded-0" value="<?php echo $row['t_category']; ?>" <?php if($user_role != 1){ ?> readonly <?php } ?> val required>
 			                    </div>-->
 								</div>
+								
 			                  <div class="form-group">
 			                    <label class="control-label text-p-reset">Task Description</label>
 			                    <div class="">
