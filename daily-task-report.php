@@ -67,7 +67,7 @@ include("include/sidebar.php");
           <div class="table-responsive" id="printout">
             <table class="table table-codensed table-custom">
               <thead>
-			  <table border="1">
+			  
                 <tr>
                   <th>No</th>
                   <th>Task Title</th>
