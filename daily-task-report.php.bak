@@ -52,7 +52,7 @@ include("include/sidebar.php");
                 <input type="date" id="date" value="<?= $date ?>" class="form-control rounded-0">
             </div>
             <div class="col-md-4">
-                  <button class="btn btn-primary btn-sm btn-menu" type="button" id="filter"><i class="glyphicon glyphicon-filter"></i> Filter</button>
+                  <button class="btn btn-primary btn-sm btn-menu" type="button" id="filter"><i class="glyphicon glyphicon-filter"></i> Search</button>
                   <button class="btn btn-success btn-sm btn-menu" type="button" id="print"><i class="glyphicon glyphicon-print"></i> Print PDF</button>
 				  <a href="export_task.php"><button class="btn btn-info" type="button" id="export">Download All Task</button></a>
             </div>
