@@ -147,9 +147,6 @@ include("include/sidebar.php");
 				<div class="btn-group">
                   <button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Add New Task</button>
                 </div>
-				<div class="btn-group">
-                  <button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Export</button>
-                </div>
             </div>
           </div>
           <center ><h3>Task Management Section</h3></center>

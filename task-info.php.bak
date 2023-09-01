@@ -45,10 +45,6 @@ include("include/sidebar.php");
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h2 class="modal-title text-center">Add New Task</h2>
         </div>
-		<div class="modal-header rounded-0">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h2 class="modal-title text-center">Export</h2>
-        </div>
         <div class="modal-body rounded-0">
           <div class="row">
             <div class="col-md-12">
@@ -148,8 +144,11 @@ include("include/sidebar.php");
               <?php } ?>
 
               </div>
-<div class="btn-group">
+				<div class="btn-group">
                   <button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Add New Task</button>
+                </div>
+				<div class="btn-group">
+                  <button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Export</button>
                 </div>
             </div>
           </div>
