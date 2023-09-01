@@ -158,7 +158,7 @@ include("include/sidebar.php");
             <table class="table table-codensed table-custom">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>No</th>
                   <th>Task Title</th>
 				          <th>Task Category</th>
                   <th>Technical Support</th>
