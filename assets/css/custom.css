@@ -314,7 +314,6 @@ input.input-custom::-moz-placeholder {
 }
 .table-custom>tbody>tr {
   transition: background 0.25s ease;
-  border: 1px;
 }
 .table-custom>tbody>tr:hover {
   background: #014055;
