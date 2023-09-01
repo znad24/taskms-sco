@@ -55,20 +55,20 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 							  <div class="form-group">
 			                    <label class="control-label text-p-reset">Task Category</label>
 								<div class="form-group">
-					<label for="task_category">Task Category</label>
-				<select class="form-control" name="task_category" id="task_category">
-				  <option disabled selected value="">Silahkan Pilih</option>s
-				  <option value="NETWORK">NETWORK</option>
-				  <option value="HARDWARE">HARDWARE</option>
-				  <option value="SOFTWARE">SOFTWARE</option>
-				  <option value="PRINTER">PRINTER</option>		
-				  <option value="INPUT DATA">INPUT DATA</option>
-				  <option value="OS">OS</option>
-				  <option value="MAINTENANCE">MAINTENANCE</option>\
-				  <option value="MEETING">MEETING</option>
-				  <option value="SERAH TERIMA">SERAH TERIMA</option>	  
-				</select>
-				</div>
+								<label for="task_category">Task Category</label>
+								<select class="form-control" name="task_category" id="task_category">
+								  <option disabled selected value="">Silahkan Pilih</option>s
+								  <option value="NETWORK">NETWORK</option>
+								  <option value="HARDWARE">HARDWARE</option>
+								  <option value="SOFTWARE">SOFTWARE</option>
+								  <option value="PRINTER">PRINTER</option>		
+								  <option value="INPUT DATA">INPUT DATA</option>
+								  <option value="OS">OS</option>
+								  <option value="MAINTENANCE">MAINTENANCE</option>\
+								  <option value="MEETING">MEETING</option>
+								  <option value="SERAH TERIMA">SERAH TERIMA</option>	  
+								</select>
+								</div>
 			                    <!--<div class="">
 			                      <input type="text" placeholder="Task Category" id="task_category" name="task_category" list="expense" class="form-control rounded-0" value="<?php echo $row['t_category']; ?>" <?php if($user_role != 1){ ?> readonly <?php } ?> val required>
 			                    </div>-->
