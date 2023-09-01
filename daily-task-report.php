@@ -71,7 +71,7 @@ include("include/sidebar.php");
                 <tr>
                   <th>No</th>
                   <th>Task Title</th>
-				          <th>Task Category</th>
+				  <th>Task Category</th>
                   <th>Technical Support</th>
                   <th>Start Time</th>
                   <th>End Time</th>
