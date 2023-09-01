@@ -175,13 +175,13 @@ include("include/sidebar.php");
                   $sql = "SELECT a.*, b.fullname 
                         FROM task_info a
                         INNER JOIN tbl_admin b ON(a.t_user_id = b.user_id)
-                        ORDER BY a.task_id DESC LIMIT 25";
+                        ORDER BY a.task_id";
                 }else{
                   $sql = "SELECT a.*, b.fullname 
                   FROM task_info a
                   INNER JOIN tbl_admin b ON(a.t_user_id = b.user_id)
                   WHERE a.t_user_id = $user_id
-                  ORDER BY a.task_id DESC LIMIT 25";
+                  ORDER BY a.task_id";
                 } 
                 
                   $info = $obj_admin->manage_all_info($sql);
