@@ -65,7 +65,7 @@ include("include/sidebar.php");
           <div class="gap"></div>
 
           <div class="table-responsive" id="printout">
-            <table border="1" class="table table-codensed table-custom">
+            <table class="table table-codensed table-custom">
               <thead>
 			  
                 <tr>
