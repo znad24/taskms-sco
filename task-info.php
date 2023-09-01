@@ -64,11 +64,11 @@ include("include/sidebar.php");
 				  <option value="HARDWARE">HARDWARE</option>
 				  <option value="SOFTWARE">SOFTWARE</option>
 				  <option value="PRINTER">PRINTER</option>		
-          <option value="INPUT DATA">INPUT DATA</option>
-          <option value="OS">OS</option>
-          <option value="MAINTENANCE">MAINTENANCE</option>\
-          <option value="MEETING">MEETING</option>
-          <option value="SERAH TERIMA">SERAH TERIMA</option>	  
+				  <option value="INPUT DATA">INPUT DATA</option>
+				  <option value="OS">OS</option>
+				  <option value="MAINTENANCE">MAINTENANCE</option>\
+				  <option value="MEETING">MEETING</option>
+				  <option value="SERAH TERIMA">SERAH TERIMA</option>	  
 				</select>
 				</div>
                   <div class="form-group">
@@ -160,7 +160,7 @@ include("include/sidebar.php");
                 <tr>
                   <th>No</th>
                   <th>Task Title</th>
-				          <th>Task Category</th>
+				  <th>Task Category</th>
                   <th>Technical Support</th>
                   <th>Start Time</th>
                   <th>End Time</th>
