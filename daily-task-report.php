@@ -68,7 +68,7 @@ include("include/sidebar.php");
             <table class="table table-codensed table-custom">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>No</th>
                   <th>Task Title</th>
 				          <th>Task Category</th>
                   <th>Technical Support</th>
@@ -104,7 +104,7 @@ include("include/sidebar.php");
                 <tr>
                   <td><?php echo $serial; $serial++; ?></td>
                   <td><?php echo $row['t_title']; ?></td>
-				          <td><?php echo $row['t_category']; ?></td>
+				  <td><?php echo $row['t_category']; ?></td>
                   <td><?php echo $row['fullname']; ?></td>
                   <td><?php echo $row['t_start_time']; ?></td>
                   <td><?php echo $row['t_end_time']; ?></td>
