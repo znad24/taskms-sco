@@ -186,7 +186,7 @@
     .navbar-inverse .navbar-nav-custom>.active>a:focus,
     .navbar-inverse .navbar-nav-custom>.active>a:hover {
         color: #fff;
-        background-color: #fff
+        background-color: #616161;
     }
     /*============navigation sidebar design=============*/
     /*============input field design=============*/
@@ -545,7 +545,7 @@
     }
     
     .well {
-        background-color: #f5f5f582 !important;
+        background-color: #f5f5f5 !important;
     }
     
     .well .well {
