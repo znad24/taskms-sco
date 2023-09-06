@@ -58,7 +58,7 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 								<div class="form-group">-->
 								<label class="control-label text-p-reset">Task Category</label>
 								<select class="form-control" name="task_category" id="task_category">
-								  <option disabled selected value="<?php echo $row['t_category']; ?>">Silahkan Pilih</option>s
+								  <option value="<?php echo $row['t_category']; ?>">Silahkan Pilih</option>s
 								  <option value="NETWORK">NETWORK</option>
 								  <option value="HARDWARE">HARDWARE</option>
 								  <option value="SOFTWARE">SOFTWARE</option>
@@ -82,7 +82,7 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                    </div>
 			                  </div>
 			                  <div class="form-group">
-			                    <label class="control-label text-p-reset">Strat Time</label>
+			                    <label class="control-label text-p-reset">Start Time</label>
 			                    <div class="">
 			                      <input type="text" name="t_start_time" id="t_start_time"  class="form-control rounded-0" value="<?php echo $row['t_start_time']; ?>">
 			                    </div>

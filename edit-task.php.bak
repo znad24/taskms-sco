@@ -57,8 +57,8 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                    <!--<label class="control-label text-p-reset">Task Category</label>
 								<div class="form-group">-->
 								<label class="control-label text-p-reset">Task Category</label>
-								<select class="form-control" name="task_category" id="task_category" <?php echo $row['t_category']; ?>>
-								  <option disabled selected value="">Silahkan Pilih</option>s
+								<select class="form-control" name="task_category" id="task_category">
+								  <option disabled selected value="<?php echo $row['t_category']; ?>">Silahkan Pilih</option>s
 								  <option value="NETWORK">NETWORK</option>
 								  <option value="HARDWARE">HARDWARE</option>
 								  <option value="SOFTWARE">SOFTWARE</option>
