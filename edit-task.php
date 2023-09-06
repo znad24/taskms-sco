@@ -54,11 +54,9 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                  </div>
 							  
 							  <div class="form-group">
-			                    <!--<label class="control-label text-p-reset">Task Category</label>
-								<div class="form-group">-->
 								<label class="control-label text-p-reset">Task Category</label>
-								<select class="form-control" name="task_category" id="task_category">
-								  <option value="<?php echo $row['t_category']; ?>">Silahkan Pilih</option>s
+								<select class="form-control" name="task_category" id="task_category"value="<?php echo $row['t_category']; ?>">
+								  <!--<option value="<?php echo $row['t_category']; ?>">Silahkan Pilih</option>-->
 								  <option value="NETWORK">NETWORK</option>
 								  <option value="HARDWARE">HARDWARE</option>
 								  <option value="SOFTWARE">SOFTWARE</option>
@@ -118,7 +116,7 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                    <label class="control-label text-p-reset">Status</label>
 			                    <div class="">
 			                      <select class="form-control rounded-0" name="status" id="status">
-			                      	<option value="0" <?php if($row['status'] == 0){ ?>selected <?php } ?>>Incomplete</option>
+			                      	<option value="0" <?php if($row['status'] == 0){ ?>selected <?php } ?>>In complete</option>
 			                      	<option value="1" <?php if($row['status'] == 1){ ?>selected <?php } ?>>In Progress</option>
 			                      	<option value="2" <?php if($row['status'] == 2){ ?>selected <?php } ?>>Completed</option>
 			                      </select>
