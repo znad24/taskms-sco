@@ -118,7 +118,7 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                    <label class="control-label text-p-reset">Status</label>
 			                    <div class="">
 			                      <select class="form-control rounded-0" name="status" id="status">
-			                      	<option value="0" <?php if($row['status'] == 0){ ?>selected <?php } ?>>Incomplete</option>
+			                      	<option value="0" <?php if($row['status'] == 0){ ?>selected <?php } ?>>In complete</option>
 			                      	<option value="1" <?php if($row['status'] == 1){ ?>selected <?php } ?>>In Progress</option>
 			                      	<option value="2" <?php if($row['status'] == 2){ ?>selected <?php } ?>>Completed</option>
 			                      </select>
