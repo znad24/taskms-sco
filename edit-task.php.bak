@@ -54,18 +54,15 @@ $row = $info->fetch(PDO::FETCH_ASSOC);
 			                  </div>
 							  
 							  <div class="form-group">
-			                    <!--<label class="control-label text-p-reset">Task Category</label>
-								<div class="form-group">-->
-								<label class="control-label text-p-reset">Task Category</label>
-								<select class="form-control" name="task_category" id="task_category">
-								  <option value=""><?php echo $row['t_category']; ?></option>
+								<label class="control-label text-p-reset">Task Category Real</label>
+								<select class="form-control" name="task_category" id="task_category" value="<?php echo $row['t_category']; ?>" <?php if($user_role != 1){ ?> readonly <?php } ?> val required>
 								  <option value="NETWORK">NETWORK</option>
 								  <option value="HARDWARE">HARDWARE</option>
 								  <option value="SOFTWARE">SOFTWARE</option>
 								  <option value="PRINTER">PRINTER</option>		
 								  <option value="INPUT DATA">INPUT DATA</option>
 								  <option value="OS">OS</option>
-								  <option value="MAINTENANCE">MAINTENANCE</option>\
+								  <option value="MAINTENANCE">MAINTENANCE</option>
 								  <option value="MEETING">MEETING</option>
 								  <option value="SERAH TERIMA">SERAH TERIMA</option>	  
 								</select>
