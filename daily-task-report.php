@@ -68,15 +68,15 @@ include("include/sidebar.php");
             <table class="table table-codensed table-custom">
               <thead>
 			  
-                <tr>
-                  <th>No</th>
-                  <th>Task Title</th>
-				  <th>Task Category</th>
-                  <th>Technical Support</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
-                  <th>Status</th>
-                </tr>
+					<tr>
+					  <th>No</th>
+					  <th>Task Title</th>
+					  <th>Task Category</th>
+					  <th>Technical Support</th>
+					  <th>Start Time</th>
+					  <th>End Time</th>
+					  <th>Status</th>
+					</tr>
               </thead>
               <tbody>
 
