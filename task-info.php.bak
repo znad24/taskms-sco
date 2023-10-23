@@ -78,15 +78,15 @@ include("include/sidebar.php");
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label text-p-reset">Start Time</label>
+                    <label class="control-label text-p-reset">Start Timex</label>
                     <div class="">
-                      <input type="date_modify" name="t_start_time" id="t_start_time" class="form-control rounded-0">
+                      <input type="text" name="t_start_time" id="t_start_time" class="form-control rounded-0">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label text-p-reset">End Time</label>
                     <div class="">
-                      <input type="date_modify" name="t_end_time" id="t_end_time" class="form-control rounded-0">
+                      <input type="text" name="t_end_time" id="t_end_time" class="form-control rounded-0">
                     </div>
                   </div>
                   <div class="form-group">
