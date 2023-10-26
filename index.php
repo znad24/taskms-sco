@@ -1,6 +1,4 @@
-<head>
-<link href="../img/loho.png" rel="shortcut icon">
-</head>
+
 <?php
 require 'authentication.php'; // admin authentication check 
 
@@ -22,6 +20,9 @@ $page_name="Login";
 include("include/login_header.php");
 
 ?>
+<head>
+<link href="../img/loho.png" rel="shortcut icon">
+</head>
 <style>
 	html, body{
 		height:100%;
