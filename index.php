@@ -1,4 +1,3 @@
-
 <?php
 require 'authentication.php'; // admin authentication check 
 
