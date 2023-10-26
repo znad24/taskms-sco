@@ -34,6 +34,7 @@ include("include/sidebar.php");
 ?>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link href="../img/loho.png" rel="shortcut icon">
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
