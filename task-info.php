@@ -150,7 +150,7 @@ include("include/sidebar.php");
                 </div>
             </div>
           </div>
-          <center ><h3>Task Management Section</h3></center>
+          <center ><h3>Daily Task Report </h3></center>
           <div class="gap"></div>
 
           <div class="gap"></div>
