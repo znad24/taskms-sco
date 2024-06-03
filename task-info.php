@@ -65,11 +65,13 @@ include("include/sidebar.php");
 				  <option value="HARDWARE">HARDWARE</option>
 				  <option value="SOFTWARE">SOFTWARE</option>
 				  <option value="PRINTER">PRINTER</option>		
-				  <option value="INPUT DATA">INPUT DATA</option>
+				  <option value="EMAIL">EMAIL</option>
 				  <option value="OS">OS</option>
-				  <option value="MAINTENANCE">MAINTENANCE</option>\
+				  <option value="MAINTENANCE">MAINTENANCE</option>
 				  <option value="MEETING">MEETING</option>
-				  <option value="SERAH TERIMA">SERAH TERIMA</option>	  
+				  <option value="SERAH TERIMA">SERAH TERIMA</option>
+          <option value="INPUT DATA">INPUT DATA</option>	
+            
 				</select>
 				</div>
                   <div class="form-group">
