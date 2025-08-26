@@ -132,7 +132,8 @@ $info = $stmt;
 
         <button type="submit" class="btn btn-primary">Apply</button>
       </form>
-
+      
+<div style="margin-top:15px;"></div>
       <div class="table-responsive">
         <table class="table table-codensed table-custom">
           <thead>
