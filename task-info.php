@@ -13,7 +13,6 @@ if ($user_id == NULL || $security_key == NULL) {
 // check admin
 $user_role = $_SESSION['user_role'];
 
-
 if(isset($_GET['delete_task'])){
   $action_id = $_GET['task_id'];
   
@@ -28,225 +27,218 @@ if(isset($_POST['add_task_post'])){
 
 $page_name="Task_Info";
 include("include/sidebar.php");
-// include('ems_header.php');
 
+// --- PAGING + FILTER SETUP ---
+$default_per_page = 10;
+$per_page = isset($_GET['per_page']) ? (int)$_GET['per_page'] : $default_per_page;
+if (!in_array($per_page, [10, 15, 20, 25, 50])) $per_page = $default_per_page;
+
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if($page < 1) $page = 1;
+$offset = ($page - 1) * $per_page;
+
+// --- Search + Date Filter ---
+$search     = isset($_GET['search']) ? trim($_GET['search']) : '';
+$start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+$end_date   = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+
+$where_clause = '';
+$params = [];
+
+if ($search != '') {
+    $where_clause .= " AND (a.t_title LIKE :search OR a.t_category LIKE :search) ";
+    $params[':search'] = "%$search%";
+}
+
+// filter by date (menggunakan kolom t_start_time)
+if ($start_date != '' && $end_date != '') {
+    $where_clause .= " AND DATE(a.t_start_time) BETWEEN :start_date AND :end_date ";
+    $params[':start_date'] = $start_date;
+    $params[':end_date']   = $end_date;
+} elseif ($start_date != '') {
+    $where_clause .= " AND DATE(a.t_start_time) >= :start_date ";
+    $params[':start_date'] = $start_date;
+} elseif ($end_date != '') {
+    $where_clause .= " AND DATE(a.t_start_time) <= :end_date ";
+    $params[':end_date'] = $end_date;
+}
+
+// --- Hitung total data ---
+if($user_role == 1){
+    $sql_count = "SELECT COUNT(*) as total FROM task_info a WHERE 1=1 $where_clause";
+} else {
+    $sql_count = "SELECT COUNT(*) as total FROM task_info a WHERE a.t_user_id = $user_id $where_clause";
+}
+$stmt = $obj_admin->manage_all_info($sql_count);
+foreach ($params as $k => $v) {
+    $stmt->bindValue($k, $v, PDO::PARAM_STR);
+}
+$stmt->execute();
+$total_row = $stmt->fetch(PDO::FETCH_ASSOC);
+$total_data = $total_row['total'];
+$total_pages = ceil($total_data / $per_page);
+
+// --- Query data sesuai paging ---
+if($user_role == 1){
+    $sql = "SELECT a.*, b.fullname 
+            FROM task_info a
+            INNER JOIN tbl_admin b ON(a.t_user_id = b.user_id)
+            WHERE 1=1 $where_clause
+            ORDER BY a.task_id DESC 
+            LIMIT $offset, $per_page";
+} else {
+    $sql = "SELECT a.*, b.fullname 
+            FROM task_info a
+            INNER JOIN tbl_admin b ON(a.t_user_id = b.user_id)
+            WHERE a.t_user_id = $user_id $where_clause
+            ORDER BY a.task_id DESC 
+            LIMIT $offset, $per_page";
+}
+$stmt = $obj_admin->manage_all_info($sql);
+foreach ($params as $k => $v) {
+    $stmt->bindValue($k, $v, PDO::PARAM_STR);
+}
+$stmt->execute();
+$info = $stmt;
 
 ?>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<div class="row">
+  <div class="col-md-12">
+    <div class="well well-custom rounded-0">
+      <center><h3>Daily Task Report</h3></center>
 
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog add-category-modal">
-    
-      <!-- Modal content-->
-      <div class="modal-content rounded-0">
-        <div class="modal-header rounded-0">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h2 class="modal-title text-center">Add New Task</h2>
+      <!-- Search + Date + Per Page Form -->
+      <form method="get" class="form-inline" style="margin-bottom:15px;">
+        <div class="form-group">
+          <input type="text" name="search" class="form-control" placeholder="Search task..." 
+                 value="<?php echo htmlspecialchars($search); ?>">
         </div>
-        <div class="modal-body rounded-0">
-          <div class="row">
-            <div class="col-md-12">
-              <form role="form" action="" method="post" autocomplete="off">
-                <div class="form-horizontal">
-                  <div class="form-group">
-                    <label class="control-label text-p-reset">Task Title</label>
-                    <div class="">
-                      <input type="text" placeholder="Task Title" id="task_title" name="task_title" list="expense" class="form-control rounded-0" id="default" required>
-                    </div>
-                  </div>
-				<div class="form-group">
-					<label for="task_category">Task Category</label>
-				<select class="form-control" name="task_category" id="task_category">
-				  <option disabled selected value="">Silahkan Pilih</option>s
-				  <option value="NETWORK">NETWORK</option>
-				  <option value="HARDWARE">HARDWARE</option>
-				  <option value="SOFTWARE">SOFTWARE</option>
-				  <option value="PRINTER">PRINTER</option>		
-				  <option value="EMAIL">EMAIL</option>
-				  <option value="OS">OS</option>
-				  <option value="MAINTENANCE">MAINTENANCE</option>
-				  <option value="MEETING">MEETING</option>
-				  <option value="SERAH TERIMA">SERAH TERIMA</option>
-          <option value="INPUT DATA">INPUT DATA</option>	
-            
-				</select>
-				</div>
-                  <div class="form-group">
-                    <label class="control-label text-p-reset">Task Description</label>
-                    <div class="">
-                      <textarea name="task_description" id="task_description" placeholder="Text Deskcription" class="form-control rounded-0" rows="5" cols="5"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label text-p-reset">Start Time</label>
-                    <div class="">
-                      <input type="date" name="t_start_time" id="t_start_time" class="form-control rounded-0">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label text-p-reset">End Time</label>
-                    <div class="">
-                      <input type="date" name="t_end_time" id="t_end_time" class="form-control rounded-0">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="control-label text-p-reset">Technical Support</label>
-                    <div class="">
-                      <?php 
-                        $sql = "SELECT user_id, fullname FROM tbl_admin WHERE user_role = 2";
-                        $info = $obj_admin->manage_all_info($sql);   
-                      ?>
-                      <select class="form-control rounded-0" name="assign_to" id="aassign_to" required>
-                        <option value="">Select Employee...</option>
-
-                        <?php while($row = $info->fetch(PDO::FETCH_ASSOC)){ ?>
-                        <option value="<?php echo $row['user_id']; ?>"><?php echo $row['fullname']; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                   
-                  </div>
-                  <div class="form-group">
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-3">
-                      <button type="submit" name="add_task_post" class="btn btn-primary rounded-0 btn-sm">Add Task</button>
-                    </div>
-                    <div class="col-sm-3">
-                      <button type="submit" class="btn btn-default rounded-0 btn-sm" data-dismiss="modal">Cancel</button>
-                    </div>
-                  </div>
-                </div>
-              </form> 
-            </div>
-          </div>
-
+        <div class="form-group mx-sm-2">
+          <label>From:</label>
+          <input type="date" name="start_date" class="form-control"
+                 value="<?php echo htmlspecialchars($start_date); ?>">
         </div>
+        <div class="form-group mx-sm-2">
+          <label>To:</label>
+          <input type="date" name="end_date" class="form-control"
+                 value="<?php echo htmlspecialchars($end_date); ?>">
+        </div>
+        <div class="form-group mx-sm-2">
+          <select name="per_page" class="form-control" onchange="this.form.submit()">
+            <option value="10" <?php if($per_page==10) echo 'selected'; ?>>Show 10</option>
+            <option value="15" <?php if($per_page==15) echo 'selected'; ?>>Show 15</option>
+            <option value="20" <?php if($per_page==20) echo 'selected'; ?>>Show 20</option>
+            <option value="25" <?php if($per_page==25) echo 'selected'; ?>>Show 25</option>
+            <option value="50" <?php if($per_page==50) echo 'selected'; ?>>Show 50</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+      </form>
+
+      <div class="table-responsive">
+        <table class="table table-codensed table-custom">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Task Title</th>
+              <th>Task Category</th>
+              <th>Technical Support</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php 
+            $serial = $offset + 1;
+            $num_row = $info->rowCount();
+            if($num_row == 0){
+              echo '<tr><td colspan="8">No Data found</td></tr>';
+            }
+            while($row = $info->fetch(PDO::FETCH_ASSOC)){
+          ?>
+            <tr>
+              <td><?php echo $serial++; ?></td>
+              <td><?php echo $row['t_title']; ?></td>
+              <td><?php echo $row['t_category']; ?></td>
+              <td><?php echo $row['fullname']; ?></td>
+              <td><?php echo $row['t_start_time']; ?></td>
+              <td><?php echo $row['t_end_time']; ?></td>
+              <td>
+                <?php  
+                  if($row['status'] == 0){
+                    echo '<small class="label label-default border px-3">In Completed</small>';
+                  }elseif ($row['status'] == 1){
+                    echo '<small class="label label-warning px-3">In Progress</small>';		
+                  }elseif($row['status'] == 2){
+                    echo '<small class="label label-success px-3">Completed</small>';
+                  }
+                ?>
+              </td>
+              <td>
+                <a href="edit-task.php?task_id=<?php echo $row['task_id'];?>" title="Update Task"><span class="glyphicon glyphicon-edit"></span></a>
+                &nbsp;
+                <a href="task-details.php?task_id=<?php echo $row['task_id'];?>" title="View"><span class="glyphicon glyphicon-folder-open"></span></a>
+                &nbsp;
+                <?php if($user_role == 1){ ?>
+                <a href="?delete_task=delete_task&task_id=<?php echo $row['task_id']; ?>" onclick=" return check_delete();" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                <?php } ?>
+              </td>
+            </tr>
+          <?php } ?>
+          </tbody>
+        </table>
       </div>
+
+      <!-- PAGINATION -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <?php 
+          // bikin query string untuk search & date supaya ikut di link pagination
+          $query_string = http_build_query([
+              'search' => $search,
+              'start_date' => $start_date,
+              'end_date' => $end_date,
+              'per_page' => $per_page
+          ]);
+          ?>
+
+          <?php if($page > 1): ?>
+            <li><a href="?<?php echo $query_string; ?>&page=<?php echo $page-1; ?>">&laquo; Prev</a></li>
+          <?php endif; ?>
+
+          <?php
+            if ($page > 3) {
+                echo '<li><a href="?'.$query_string.'&page=1">1</a></li>';
+                if ($page > 4) {
+                    echo '<li class="disabled"><span>...</span></li>';
+                }
+            }
+            for ($i = max(1, $page - 2); $i <= min($total_pages, $page + 2); $i++) {
+                if ($i == $page) {
+                    echo '<li class="active"><span>'.$i.'</span></li>';
+                } else {
+                    echo '<li><a href="?'.$query_string.'&page='.$i.'">'.$i.'</a></li>';
+                }
+            }
+            if ($page < $total_pages - 2) {
+                if ($page < $total_pages - 3) {
+                    echo '<li class="disabled"><span>...</span></li>';
+                }
+                echo '<li><a href="?'.$query_string.'&page='.$total_pages.'">'.$total_pages.'</a></li>';
+            }
+          ?>
+
+          <?php if($page < $total_pages): ?>
+            <li><a href="?<?php echo $query_string; ?>&page=<?php echo $page+1; ?>">Next &raquo;</a></li>
+          <?php endif; ?>
+        </ul>
+      </nav>
+
     </div>
   </div>
+</div>
 
-
-
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="well well-custom rounded-0">
-          <div class="gap"></div>
-          <div class="row">
-            <div class="col-md-8">
-              <div class="btn-group">
-                <?php if($user_role == 1){ ?>
-                <div class="btn-group">
-                  <!--<button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Assign New Task</button>-->
-                </div>
-              <?php } ?>
-
-              </div>
-				<div class="btn-group">
-                  <button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Add New Task</button>
-                </div>
-            </div>
-          </div>
-          <center ><h3>Daily Task Report </h3></center>
-          <div class="gap"></div>
-
-          <div class="gap"></div>
-
-          <div class="table-responsive">
-            <table class="table table-codensed table-custom">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Task Title</th>
-				  <th>Task Category</th>
-                  <th>Technical Support</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-
-              <?php 
-                if($user_role == 1){
-                  $sql = "SELECT a.*, b.fullname 
-                        FROM task_info a
-                        INNER JOIN tbl_admin b ON(a.t_user_id = b.user_id)
-                        ORDER BY a.task_id DESC Limit 60";
-                }else{
-                  $sql = "SELECT a.*, b.fullname 
-                  FROM task_info a
-                  INNER JOIN tbl_admin b ON(a.t_user_id = b.user_id)
-                  WHERE a.t_user_id = $user_id
-                  ORDER BY a.task_id DESC Limit 60";
-                } 
-                
-                  $info = $obj_admin->manage_all_info($sql);
-                  $serial  = 1;
-                  $num_row = $info->rowCount();
-                  if($num_row==0){
-                    echo '<tr><td colspan="7">No Data found</td></tr>';
-                  }
-                      while( $row = $info->fetch(PDO::FETCH_ASSOC) ){
-              ?>
-                <tr>
-                  <td><?php echo $serial; $serial++; ?></td>
-                  <td><?php echo $row['t_title']; ?></td>
-				  <td><?php echo $row['t_category']; ?></td>
-                  <td><?php echo $row['fullname']; ?></td>
-                  <td><?php echo $row['t_start_time']; ?></td>
-                  <td><?php echo $row['t_end_time']; ?></td>
-                  <td>
-                    <?php  if($row['status'] == 0){
-							echo '<small class="label label-default border px-3">In Completed <span class="glyphicon glyphicon-remove" ></small>';
-					}elseif ($row['status'] == 1){
-							echo '<small class="label label-warning px-3">In Progress <span class="glyphicon glyphicon-refresh" ></small>';		
-					 }elseif($row['status'] == 2){
-                        echo '<small class="label label-success px-3">Completed	 <span class="glyphicon glyphicon-ok" ></small>';
-                    
-                    } ?>
-                    
-                  </td>
-  
-                 <td><a title="Update Task"  href="edit-task.php?task_id=<?php echo $row['task_id'];?>"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
-                  <a title="View" href="task-details.php?task_id=<?php echo $row['task_id']; ?>"><span class="glyphicon glyphicon-folder-open"></span></a>&nbsp;&nbsp;
-                  <?php if($user_role == 1){ ?>
-                  <a title="Delete" href="?delete_task=delete_task&task_id=<?php echo $row['task_id']; ?>" onclick=" return check_delete();"><span class="glyphicon glyphicon-trash"></span></a></td>
-                <?php } ?>
-                </tr>
-                <?php } ?>
-                
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-<?php
-
-include("include/footer.php");
-
-
-
-?>
-
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script type="text/javascript">
-  flatpickr('#t_start_time', {
-    enableTime: true
-  });
-
-  flatpickr('#t_end_time', {
-    enableTime: true
-  });
-
-</script>
+<?php include("include/footer.php"); ?>
