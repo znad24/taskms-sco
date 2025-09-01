@@ -108,9 +108,97 @@ $stmt->execute();
 $info = $stmt;
 ?>
 
+<!-- ================= Add New Task Modal ================= -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog add-category-modal">
+    <div class="modal-content rounded-0">
+      <div class="modal-header rounded-0">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h2 class="modal-title text-center">Add New Task</h2>
+      </div>
+      <div class="modal-body rounded-0">
+        <div class="row">
+          <div class="col-md-12">
+            <form role="form" action="" method="post" autocomplete="off">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label text-p-reset">Task Title</label>
+                  <input type="text" name="task_title" placeholder="Task Title" class="form-control rounded-0" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="task_category">Task Category</label>
+                  <select class="form-control" name="task_category" id="task_category" required>
+                    <option disabled selected value="">Silahkan Pilih</option>
+                    <option value="NETWORK">NETWORK</option>
+                    <option value="HARDWARE">HARDWARE</option>
+                    <option value="SOFTWARE">SOFTWARE</option>
+                    <option value="PRINTER">PRINTER</option>		
+                    <option value="INPUT DATA">INPUT DATA</option>
+                    <option value="OS">OS</option>
+                    <option value="MAINTENANCE">MAINTENANCE</option>
+                    <option value="MEETING">MEETING</option>
+                    <option value="SERAH TERIMA">SERAH TERIMA</option>	  
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label text-p-reset">Task Description</label>
+                  <textarea name="task_description" placeholder="Text Description" class="form-control rounded-0" rows="5"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label text-p-reset">Start Time</label>
+                  <input type="text" name="t_start_time" id="t_start_time" class="form-control rounded-0">
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label text-p-reset">End Time</label>
+                  <input type="text" name="t_end_time" id="t_end_time" class="form-control rounded-0">
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label text-p-reset">Technical Support</label>
+                  <?php 
+                    $sql = "SELECT user_id, fullname FROM tbl_admin WHERE user_role = 2";
+                    $emp_info = $obj_admin->manage_all_info($sql);   
+                  ?>
+                  <select class="form-control rounded-0" name="assign_to" required>
+                    <option value="">Select Employee...</option>
+                    <?php while($row = $emp_info->fetch(PDO::FETCH_ASSOC)){ ?>
+                      <option value="<?php echo $row['user_id']; ?>"><?php echo $row['fullname']; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+
+                <div class="form-group text-center">
+                  <button type="submit" name="add_task_post" class="btn btn-primary rounded-0 btn-sm">Add Task</button>
+                  <button type="button" class="btn btn-default rounded-0 btn-sm" data-dismiss="modal">Cancel</button>
+                </div>
+
+              </div>
+            </form> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================= End Add New Task Modal ================= -->
+
 <div class="row">
   <div class="col-md-12">
     <div class="well well-custom rounded-0">
+
+      <!-- Add New Task Button -->
+      <div class="row mb-2">
+        <div class="col-md-12 text-right">
+          <button class="btn btn-info btn-menu" data-toggle="modal" data-target="#myModal">Add New Task</button>
+        </div>
+      </div>
+
       <center><h3>Daily Task Report</h3></center>
 
       <!-- Search + Date + Per Page Form -->
@@ -224,3 +312,9 @@ $info = $stmt;
 </div>
 
 <?php include("include/footer.php"); ?>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script type="text/javascript">
+  flatpickr('#t_start_time', { enableTime: true });
+  flatpickr('#t_end_time', { enableTime: true });
+</script>
