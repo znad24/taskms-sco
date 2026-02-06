@@ -2,79 +2,81 @@
 require 'authentication.php'; // admin authentication check 
 
 // ------------------ Auth Check ------------------
-$user_id      = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null;
-$user_name    = isset($_SESSION['name']) ? $_SESSION['name'] : null;
+$user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null;
+$user_name = isset($_SESSION['name']) ? $_SESSION['name'] : null;
 $security_key = isset($_SESSION['security_key']) ? $_SESSION['security_key'] : null;
-$user_role    = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 0;
+$user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 0;
 
 if (!$user_id || !$security_key) {
-    header('Location: index.php');
-    exit;
+  header('Location: index.php');
+  exit;
 }
 
 // ------------------ Delete Task ------------------
 if (isset($_GET['delete_task']) && isset($_GET['task_id'])) {
-    $task_id = intval($_GET['task_id']);
-    $sql = "DELETE FROM task_info WHERE task_id = :id";
-    $obj_admin->delete_data_by_this_method($sql, $task_id, "task-info.php");
-    exit;
+  $task_id = intval($_GET['task_id']);
+  $sql = "DELETE FROM task_info WHERE task_id = :id";
+  $obj_admin->delete_data_by_this_method($sql, $task_id, "task-info.php");
+  exit;
 }
 
 // ------------------ Add Task ------------------
 if (isset($_POST['add_task_post'])) {
-    $obj_admin->add_new_task($_POST);
-    exit;
+  $obj_admin->add_new_task($_POST);
+  exit;
 }
 
 // ------------------ Sidebar ------------------
-$page_name="Task_Info";
+$page_name = "Task_Info";
 include("include/sidebar.php");
 
 // ------------------ Paging Setup ------------------
 $default_per_page = 10;
 $per_page = isset($_GET['per_page']) ? intval($_GET['per_page']) : $default_per_page;
-if (!in_array($per_page, array(10,15,20,25,50))) $per_page = $default_per_page;
+if (!in_array($per_page, array(10, 15, 20, 25, 50)))
+  $per_page = $default_per_page;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-if ($page < 1) $page = 1;
+if ($page < 1)
+  $page = 1;
 $offset = ($page - 1) * $per_page;
 
 // ------------------ Search + Date Filter ------------------
-$search     = isset($_GET['search']) ? trim($_GET['search']) : '';
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
-$end_date   = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+$end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
 
 $where = ' WHERE 1=1 ';
 $params = array();
 
 if ($search != '') {
-    $where .= " AND (a.t_title LIKE :search OR a.t_category LIKE :search) ";
-    $params[':search'] = "%$search%";
+  $where .= " AND (a.t_title LIKE :search OR a.t_category LIKE :search) ";
+  $params[':search'] = "%$search%";
 }
 if ($start_date != '' && $end_date != '') {
-    $where .= " AND DATE(a.t_start_time) BETWEEN :start_date AND :end_date ";
-    $params[':start_date'] = $start_date;
-    $params[':end_date']   = $end_date;
+  $where .= " AND DATE(a.t_start_time) BETWEEN :start_date AND :end_date ";
+  $params[':start_date'] = $start_date;
+  $params[':end_date'] = $end_date;
 } elseif ($start_date != '') {
-    $where .= " AND DATE(a.t_start_time) >= :start_date ";
-    $params[':start_date'] = $start_date;
+  $where .= " AND DATE(a.t_start_time) >= :start_date ";
+  $params[':start_date'] = $start_date;
 } elseif ($end_date != '') {
-    $where .= " AND DATE(a.t_start_time) <= :end_date ";
-    $params[':end_date'] = $end_date;
+  $where .= " AND DATE(a.t_start_time) <= :end_date ";
+  $params[':end_date'] = $end_date;
 }
 
 // ------------------ Total Data ------------------
 if ($user_role == 1) {
-    $sql_count = "SELECT COUNT(*) as total FROM task_info a $where";
+  $sql_count = "SELECT COUNT(*) as total FROM task_info a $where";
 } else {
-    $where_user = " AND a.t_user_id = :user_id";
-    $params[':user_id'] = $user_id;
-    $sql_count = "SELECT COUNT(*) as total FROM task_info a $where $where_user";
+  $where_user = " AND a.t_user_id = :user_id";
+  $params[':user_id'] = $user_id;
+  $sql_count = "SELECT COUNT(*) as total FROM task_info a $where $where_user";
 }
 
 $stmt_count = $obj_admin->db->prepare($sql_count);
 foreach ($params as $k => $v) {
-    $stmt_count->bindValue($k, $v, PDO::PARAM_STR);
+  $stmt_count->bindValue($k, $v, PDO::PARAM_STR);
 }
 $stmt_count->execute();
 $total_data = $stmt_count->fetchColumn();
@@ -82,14 +84,14 @@ $total_pages = ceil($total_data / $per_page);
 
 // ------------------ Fetch Data ------------------
 if ($user_role == 1) {
-    $sql = "SELECT a.*, b.fullname 
+  $sql = "SELECT a.*, b.fullname 
             FROM task_info a
             INNER JOIN tbl_admin b ON a.t_user_id = b.user_id
             $where
             ORDER BY a.task_id DESC
             LIMIT :offset, :per_page";
 } else {
-    $sql = "SELECT a.*, b.fullname 
+  $sql = "SELECT a.*, b.fullname 
             FROM task_info a
             INNER JOIN tbl_admin b ON a.t_user_id = b.user_id
             $where $where_user
@@ -99,7 +101,7 @@ if ($user_role == 1) {
 
 $stmt = $obj_admin->db->prepare($sql);
 foreach ($params as $k => $v) {
-    $stmt->bindValue($k, $v, PDO::PARAM_STR);
+  $stmt->bindValue($k, $v, PDO::PARAM_STR);
 }
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->bindValue(':per_page', $per_page, PDO::PARAM_INT);
@@ -132,23 +134,20 @@ $info = $stmt;
                   <label for="task_category">Task Category</label>
                   <select class="form-control" name="task_category" id="task_category" required>
                     <option disabled selected value="">Silahkan Pilih</option>
-                    <option value="NETWORK">NETWORK</option>
-                    <option value="HARDWARE">HARDWARE</option>
-                    <option value="SOFTWARE">SOFTWARE</option>
-                    <option value="PRINTER">PRINTER</option>		
-                    <option value="INPUT DATA">INPUT DATA</option>
-                    <option value="OS">OS</option>
+                    <option value="TASK">TASK</option>
+                    <option value="TROUBLESHOOTING">TROUBLESHOOTING</option>
                     <option value="MAINTENANCE">MAINTENANCE</option>
-                    <option value="MEETING">MEETING</option>
-                    <option value="SERAH TERIMA">SERAH TERIMA</option>	  
+                    <option value="FILLFULLMENT REQ">FILLFULLMENT REQ</option>
+                    <option value="PRACTICE">PRACTICE</option>
                   </select>
                 </div>
 
                 <div class="form-group">
                   <label class="control-label text-p-reset">Task Description</label>
-                  <textarea name="task_description" placeholder="Text Description" class="form-control rounded-0" rows="5"></textarea>
+                  <textarea name="task_description" placeholder="Text Description" class="form-control rounded-0"
+                    rows="5"></textarea>
                 </div>
-
+                <!--
                 <div class="form-group">
                   <label class="control-label text-p-reset">Start Time</label>
                   <input type="text" name="t_start_time" id="t_start_time" class="form-control rounded-0">
@@ -158,16 +157,74 @@ $info = $stmt;
                   <label class="control-label text-p-reset">End Time</label>
                   <input type="text" name="t_end_time" id="t_end_time" class="form-control rounded-0">
                 </div>
+-->
 
                 <div class="form-group">
-                  <label class="control-label text-p-reset">Technical Support</label>
-                  <?php 
-                    $sql = "SELECT user_id, fullname FROM tbl_admin WHERE user_role = 2";
-                    $emp_info = $obj_admin->manage_all_info($sql);   
+                  <label class="control-label text-p-reset">Start Time</label>
+                  <input type="datetime-local" name="t_start_time" id="t_start_time" class="form-control rounded-0">
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label text-p-reset">End Time</label>
+                  <input type="datetime-local" name="t_end_time" id="t_end_time" class="form-control rounded-0">
+                </div>
+
+                <script>
+                  function getLocalDateTime() {
+                    const now = new Date();
+
+                    const year = now.getFullYear();
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const hour = String(now.getHours()).padStart(2, '0');
+                    const minute = String(now.getMinutes()).padStart(2, '0');
+
+                    return `${year}-${month}-${day}T${hour}:${minute}`;
+                  }
+
+                  const start = document.getElementById("t_start_time");
+                  const end = document.getElementById("t_end_time");
+
+                  // ISI JAM LOCAL TIME SAAT INI
+                  start.value = getLocalDateTime();
+
+                  // End Time otomatis +1 jam
+                  const endTime = new Date();
+                  endTime.setHours(endTime.getHours() + 1);
+
+                  const year = endTime.getFullYear();
+                  const month = String(endTime.getMonth() + 1).padStart(2, '0');
+                  const day = String(endTime.getDate()).padStart(2, '0');
+                  const hour = String(endTime.getHours()).padStart(2, '0');
+                  const minute = String(endTime.getMinutes()).padStart(2, '0');
+
+                  end.value = `${year}-${month}-${day}T${hour}:${minute}`;
+
+                  // Jika Start Time diubah manual → End Time ikut
+                  start.addEventListener("change", function () {
+                    const t = new Date(this.value);
+                    t.setHours(t.getHours() + 1);
+
+                    const y = t.getFullYear();
+                    const m = String(t.getMonth() + 1).padStart(2, '0');
+                    const d = String(t.getDate()).padStart(2, '0');
+                    const h = String(t.getHours()).padStart(2, '0');
+                    const min = String(t.getMinutes()).padStart(2, '0');
+
+                    end.value = `${y}-${m}-${d}T${h}:${min}`;
+                  });
+                </script>
+
+
+                <div class="form-group">
+                  <label class="control-label text-p-reset">Support By</label>
+                  <?php
+                  $sql = "SELECT user_id, fullname FROM tbl_admin WHERE user_role = 2";
+                  $emp_info = $obj_admin->manage_all_info($sql);
                   ?>
                   <select class="form-control rounded-0" name="assign_to" required>
                     <option value="">Select Employee...</option>
-                    <?php while($row = $emp_info->fetch(PDO::FETCH_ASSOC)){ ?>
+                    <?php while ($row = $emp_info->fetch(PDO::FETCH_ASSOC)) { ?>
                       <option value="<?php echo $row['user_id']; ?>"><?php echo $row['fullname']; ?></option>
                     <?php } ?>
                   </select>
@@ -179,7 +236,7 @@ $info = $stmt;
                 </div>
 
               </div>
-            </form> 
+            </form>
           </div>
         </div>
       </div>
@@ -199,12 +256,14 @@ $info = $stmt;
         </div>
       </div>
 
-      <center><h3>Daily Task Report</h3></center>
+      <center>
+        <h3>Daily Task Report</h3>
+      </center>
 
       <!-- Search + Date + Per Page Form -->
       <form method="get" class="form-inline mb-3">
-        <input type="text" name="search" class="form-control" placeholder="Search task..." 
-               value="<?php echo htmlspecialchars($search); ?>">
+        <input type="text" name="search" class="form-control" placeholder="Search task..."
+          value="<?php echo htmlspecialchars($search); ?>">
 
         <label class="mx-2">From:</label>
         <input type="date" name="start_date" class="form-control" value="<?php echo htmlspecialchars($start_date); ?>">
@@ -213,15 +272,17 @@ $info = $stmt;
         <input type="date" name="end_date" class="form-control" value="<?php echo htmlspecialchars($end_date); ?>">
 
         <select name="per_page" class="form-control mx-2" onchange="this.form.submit()">
-          <?php foreach(array(10,15,20,25,50) as $opt): ?>
-            <option value="<?php echo $opt; ?>" <?php if($per_page==$opt) echo 'selected'; ?>>Show <?php echo $opt; ?></option>
+          <?php foreach (array(10, 15, 20, 25, 50) as $opt): ?>
+            <option value="<?php echo $opt; ?>" <?php if ($per_page == $opt)
+                 echo 'selected'; ?>>Show <?php echo $opt; ?>
+            </option>
           <?php endforeach; ?>
         </select>
 
         <button type="submit" class="btn btn-primary">Apply</button>
       </form>
-      
-<div style="margin-top:15px;"></div>
+
+      <div style="margin-top:15px;"></div>
       <div class="table-responsive">
         <table class="table table-codensed table-custom">
           <thead>
@@ -237,13 +298,13 @@ $info = $stmt;
             </tr>
           </thead>
           <tbody>
-          <?php 
+            <?php
             $serial = $offset + 1;
-            if($info->rowCount()==0){
-                echo '<tr><td colspan="8">No Data found</td></tr>';
+            if ($info->rowCount() == 0) {
+              echo '<tr><td colspan="8">No Data found</td></tr>';
             } else {
-                while($row = $info->fetch(PDO::FETCH_ASSOC)){
-          ?>
+              while ($row = $info->fetch(PDO::FETCH_ASSOC)) {
+                ?>
                 <tr>
                   <td><?php echo $serial++; ?></td>
                   <td><?php echo htmlspecialchars($row['t_title']); ?></td>
@@ -253,27 +314,30 @@ $info = $stmt;
                   <td><?php echo $row['t_end_time']; ?></td>
                   <td>
                     <?php
-                      $status_label = array(0=>'In Completed',1=>'In Progress',2=>'Completed');
-                      $status_class = array(0=>'label-default',1=>'label-warning',2=>'label-success');
-                      echo '<small class="label '.$status_class[$row['status']].' px-3">'.$status_label[$row['status']].'</small>';
+                    $status_label = array(0 => 'In Completed', 1 => 'In Progress', 2 => 'Completed');
+                    $status_class = array(0 => 'label-default', 1 => 'label-warning', 2 => 'label-success');
+                    echo '<small class="label ' . $status_class[$row['status']] . ' px-3">' . $status_label[$row['status']] . '</small>';
                     ?>
                   </td>
                   <td>
-                    <a href="edit-task.php?task_id=<?php echo $row['task_id']; ?>"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a href="edit-task.php?task_id=<?php echo $row['task_id']; ?>"><span
+                        class="glyphicon glyphicon-edit"></span></a>
                     &nbsp;
-                    <a href="task-details.php?task_id=<?php echo $row['task_id']; ?>"><span class="glyphicon glyphicon-folder-open"></span></a>
+                    <a href="task-details.php?task_id=<?php echo $row['task_id']; ?>"><span
+                        class="glyphicon glyphicon-folder-open"></span></a>
                     &nbsp;
-                    <?php if($user_role==1){ ?>
-                      <a href="?delete_task=delete_task&task_id=<?php echo $row['task_id']; ?>" onclick="return check_delete();">
+                    <?php if ($user_role == 1) { ?>
+                      <a href="?delete_task=delete_task&task_id=<?php echo $row['task_id']; ?>"
+                        onclick="return check_delete();">
                         <span class="glyphicon glyphicon-trash"></span>
                       </a>
                     <?php } ?>
                   </td>
                 </tr>
-          <?php 
-                }
-            } 
-          ?>
+                <?php
+              }
+            }
+            ?>
           </tbody>
         </table>
       </div>
@@ -281,30 +345,30 @@ $info = $stmt;
       <!-- PAGINATION -->
       <nav aria-label="Page navigation">
         <ul class="pagination">
-        <?php
+          <?php
           $query_params = array(
-            'search'=>$search,
-            'start_date'=>$start_date,
-            'end_date'=>$end_date,
-            'per_page'=>$per_page
+            'search' => $search,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'per_page' => $per_page
           );
 
-          if($page>1){
-              echo '<li><a href="?'.http_build_query($query_params).'&page='.($page-1).'">&laquo; Prev</a></li>';
+          if ($page > 1) {
+            echo '<li><a href="?' . http_build_query($query_params) . '&page=' . ($page - 1) . '">&laquo; Prev</a></li>';
           }
 
-          for($i=max(1,$page-2); $i<=min($total_pages,$page+2); $i++){
-              if($i==$page){
-                  echo '<li class="active"><span>'.$i.'</span></li>';
-              } else {
-                  echo '<li><a href="?'.http_build_query($query_params).'&page='.$i.'">'.$i.'</a></li>';
-              }
+          for ($i = max(1, $page - 2); $i <= min($total_pages, $page + 2); $i++) {
+            if ($i == $page) {
+              echo '<li class="active"><span>' . $i . '</span></li>';
+            } else {
+              echo '<li><a href="?' . http_build_query($query_params) . '&page=' . $i . '">' . $i . '</a></li>';
+            }
           }
 
-          if($page<$total_pages){
-              echo '<li><a href="?'.http_build_query($query_params).'&page='.($page+1).'">Next &raquo;</a></li>';
+          if ($page < $total_pages) {
+            echo '<li><a href="?' . http_build_query($query_params) . '&page=' . ($page + 1) . '">Next &raquo;</a></li>';
           }
-        ?>
+          ?>
         </ul>
       </nav>
     </div>
