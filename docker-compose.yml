@@ -11,7 +11,7 @@ services:
       DB_HOST: mysql
       DB_USER: taskms
       DB_PASS: taskms123
-      DB_NAME: taskms
+      DB_NAME: etms_db
     depends_on:
       - mysql
 
@@ -21,8 +21,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: taskms
-      MYSQL_USER: taskms
+      MYSQL_DATABASE: etms_db
+      MYSQL_USER: root
       MYSQL_PASSWORD: taskms123
     ports:
       - "3306:3306"
