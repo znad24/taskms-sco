@@ -1,8 +1,8 @@
 <?php
 $host = getenv('DB_HOST') ?;   // NAMA CONTAINER menggunakan variabel yang sudah di seting di dalam docker-compose.yml
-$user = getenv('DB_USER') ?:root;
-$pass = getenv('DB_PASS') ?:root123;
-$db = getenv('DB_NAME') ?:etms_db;
+$user = getenv('DB_USER') ?;
+$pass = getenv('DB_PASS') ?;
+$db = getenv('DB_NAME') ?;
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 
