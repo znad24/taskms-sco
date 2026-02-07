@@ -8,10 +8,10 @@ class Admin_Class
 
 	public function __construct()
 	{
-		$host_name = getenv('DB_HOST') ?: 'database_all';
-		$user_name = getenv('DB_USER') ?: 'root';
-		$password = getenv('DB_PASS') ?: 'root123';
-		$db_name = getenv('DB_NAME') ?: 'etms_db';
+		$host_name = getenv('DB_HOST') ?;
+		$user_name = getenv('DB_USER') ?;
+		$password = getenv('DB_PASS') ?;
+		$db_name = getenv('DB_NAME') ?;
 
 		try {
 			$connection = new PDO("mysql:host={$host_name}; dbname={$db_name}; charset=utf8", $user_name, $password);
